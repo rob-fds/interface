@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.min.js"></script>
+    <script src="sketch.js"></script>
+
+    <title>Suggestions</title>
+  </head>
+  <body id="body">
+<!-- <div id="setupOpen" style='z-index: 10'>
+  <button onclick="casual()">Casual</button>
+  <button onclick="università()">Univeristy</button>
+  <button onclick="elegante()">Formal</button>
+  <button onclick="sport()">Sport</button>
+</div> -->
+
+<div id="sideBar"> <!-- DIV NUMERO 1 SIDEBAR -->
+  <div id="logo" onclick="window.location.href = './index.html'">
+    <img src=".\svg\logo.svg" width= '90px' style='margin-top:10px'>
+  </div> 
+  <div id="tab"><img src=".\imgs\wardrobe.svg" onclick="window.location.href = './inventarioArmadio.html'"></div>
+  <div id="tab"><img src=".\imgs\insights.svg " onclick="window.location.href = './insights.html'"></div>
+  <div id="tab" style="position:absolute; bottom:16px;"><img src=".\imgs\settings.svg"></div>
+</div>
+
+<main class="index">
+  <img onclick="history.back()"  style="margin-top:16px; margin-left:12px; margin-right:-5px" src="./svg/back.svg">
+<div class="titoloDiv" style="display:inline;"><h1 onclick="schermoIntero()">Today's outfits</h1></div> <!-- DIV NUMERO 2 TITOLO -->
+<img onclick="window.location.href = './meteo.html'"  style="margin-left: 420px" src="./svg/tinyMeteo.svg">
+<div class="contenuto">
+  <div class="sottoTitoloDiv">Pick up and wear your favourite match <div id="modeBg"></div><img style="margin-left: 440px"src="./svg/mode.svg"></div>
+  
+<div class='container ' id="1" style="float:left;"> <!-- DIV NUMERO 3 CAPO DEL GIORNO-->
+<div class="button" id="changeButton"  onClick="hideCards(); localStorage.removeItem('clothOfTheDay');" style="margin-left:35px; margin-top:567px">change</div>
+<div class="buttonFull" id="acceptButton"  onClick="localStorage.setItem('inizio', 0); acceptClothes();"style="margin-left:207px; margin-top:567px">Ok</div>
+</div>
+
+<div class="selezioneStile white" style="display:none; justify-content: center; position: absolute; margin-top:18px" id="selector">
+
+  <p style="font-size:36px; font-weight:500; margin-top: 24px; text-align: left; padding-left: 20px;padding-right: 20px;">What do you dislike?</p>
+
+
+  <!--onclick active -->
+    <button class="selectBtn" style="display:block; margin-top:35px" onclick="
+    if(this.className=='selectBtn'){this.className='selectBtn-clicked'}else{this.className='selectBtn'}
+    ">
+      <p style="margin-left:32px; text-align:left;">Colour doesn’t match my mood</p>
+    </button>
+
+
+    <!--onclick active -->
+    <button class="selectBtn" style="display:block" onclick="
+    if(this.className=='selectBtn'){this.className='selectBtn-clicked'}else{this.className='selectBtn'}
+    ">
+      <p style="margin-left:32px; text-align:left;">Its size doesn’t fit anymore</p>
+    </button>
+
+    <!--onclick active -->
+    <button class="selectBtn" style="display:block;" onclick="
+    if(this.className=='selectBtn'){this.className='selectBtn-clicked'}else{this.className='selectBtn'}
+    ;">
+      <p style="margin-left:32px; text-align:left;">The fabric weight is too heavy</p>
+    </button>
+
+    <button class="selectBtn" style="display:block;" onclick="
+    if(this.className=='selectBtn'){this.className='selectBtn-clicked'}else{this.className='selectBtn'}
+    ;">
+      <p style="margin-left:32px; text-align:left;">The fabric weight is too light</p>
+    </button>
+
+    <button class="selectBtn" style="display:block;" onclick="
+    if(this.className=='selectBtn'){this.className='selectBtn-clicked'}else{this.className='selectBtn'}
+    ;">
+      <p style="margin-left:32px; text-align:left;">It’s damaged</p>
+    </button>
+
+
+    <button class="rounded" id="confirmBtn" style="width: 185px;height: 48px; display: block; margin: 16px; position: absolute; bottom:24px; right:0px"
+      onclick='changeClothes(localStorage.getItem("inizio"))'>
+      <!--onclick active -->
+      <p style="font-size:24px;">confirm</p>
+    </button>
+</div>
+
+<div style="display: none; float:left; left:284px; padding-right:0px; margin-left:-300px; position: relative;" id="wrapperS" > <!-- DIV NUMERO 5 SUGGERIMENTI -->
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide white" id="2"></div>
+      <div class="swiper-slide white" id="3"></div>
+      <div class="swiper-slide white" id="4"></div>
+    </div>
+  </div>
+</div>
+</div>
+</main>
+
+
+  </body>
+</html>
+
+<!-- <script type="text/javascript" src="csvjson.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+<script type="text/javascript" src="functions.js"></script>
+<script type="text/javascript" src="script.js"></script>
+<script>
+
+  let inizio = localStorage.getItem("inizio");
+
+  fetch('./armadio.json')
+.then(response => {
+  return response.json();
+})
+.then(jsondata => {
+  armadio = jsondata;
+  hexToRGB()
+  stile = JSON.parse(localStorage.getItem("stile"));
+  console.log(stile)
+  //localStorage.removeItem("stile");
+if(inizio==0){
+  changeClothes(localStorage.getItem("inizio"))
+  var btn = document.getElementById('acceptButton')
+  btn.style.display= 'none'
+
+}else{
+  createSuggestions()
+}
+  
+
+});
+
+document.addEventListener('keydown', (event)=> {    
+    if(event.key=='l'){
+      window.location.href = './new-tag.html'
+    }
+    if(event.key=='k'){
+      history.back()
+    }
+  
+  });
+
+  
+</script>

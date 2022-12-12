@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>unkwnown tag</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.min.js"></script>
+    <script src="sketch.js"></script>
+</head>
+
+<body id="body">
+    <div class="error">
+        <!-- <img height="50" width="50" onclick="history.back()"  style="position: absolute; top:10%; left: 10%" src="./svg/back.svg"><br><br> -->
+        <!-- <img src=".\imgs\alert-circle.svg" height="100" width="100"><br> -->
+        <h1 class="error" onclick="schermoIntero()">I can't recognize this item.<br>Did you get a new garment?</h1><br><br><br>
+        <p class="error">The last item you put in your closet has an unknown tag.<br>Please scan the QR code and fill in
+            the item's details in order to make it recognizable.</p><br><br>
+        <img src=".\imgs\rfid-qr.png" style="mix-blend-mode: multiply; width: 250px; height: 250px; margin-top:15px">
+    </div>
+</body>
+
+</html>
+
+<!-- SERVONO PER FAR SPARIRE LA PAGINA POI? -->
+<!-- <script type="text/javascript" src="functions.js"></script>
+<script type="text/javascript" src="script.js"></script> -->
+<script>
+    document.addEventListener('keydown', (event)=> {    
+    if(event.key=='l'){
+      window.location.href = './new-tag.html'
+    }
+    if(event.key=='k'){
+      history.back()
+    }
+  
+  });
+</script>

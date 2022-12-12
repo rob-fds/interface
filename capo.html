@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.min.js"></script>
+    <script src="sketch.js"></script>
+
+    <title>Garment</title>
+  </head>
+  <body id="body">
+
+<div id="sideBar"> <!-- DIV NUMERO 1 SIDEBAR -->
+  <div id="logo" style="background-color:white" onclick="window.location.href = './index.html'">
+    <img src=".\svg\logo.svg" width= '90px' style='margin-top:10px'>
+  </div> 
+  <div id="tab"><img src=".\imgs\wardrobeActive.svg" onclick="window.location.href = './inventarioArmadio.html'"></div>
+  <div id="tab"><img src=".\imgs\insights.svg"></div>
+  <div id="tab" style="position:absolute; bottom:16px;"><img src=".\imgs\settings.svg"></div>
+</div>
+<main class="index">
+  <img onclick="history.back()"  style="margin-top:16px; margin-left:32px; margin-right:-14px" src="./svg/back.svg">
+<div class="titoloDiv" style="display:inline;"><h1 onclick="schermoIntero()">Garment’s details</h1></div> <!-- DIV NUMERO 2 TITOLO -->
+<div class="contenuto">
+<div class='container ' id="1" style="float:left;"></div> <!-- DIV NUMERO 3 CAPO DEL GIORNO-->
+<div class='garmentInfo'>
+  <img src=".\svg\genericInfo.svg">
+</div>
+
+</div>
+</main>
+
+
+  </body>
+</html>
+
+<!-- <script type="text/javascript" src="csvjson.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+<script type="text/javascript" src="functions.js"></script>
+<script type="text/javascript" src="script.js"></script>
+<script>
+
+let capo;
+
+fetch('./armadio.json')
+.then(response => {
+  return response.json();
+})
+.then(jsondata => {
+  armadio = jsondata;
+  hexToRGB()
+
+  capo = localStorage.getItem("capo");
+
+  let stop=0;
+  for(let j=0; j<armadio.length && stop==0; j++){
+    if(armadio[j].Cloth_ID==capo){
+      capo=j;
+      stop = 1;
+      clothOfTheDay = armadio[j]
+    }
+  }
+
+  
+
+  //findClothOfTheDay()
+  //armadio = armadio.filter(isColorCompatible)
+  rankColorCompatibility(armadio)
+
+  armadio0 = armadio.filter(isLayer0)
+  armadio1 = armadio.filter(isLayer1)
+  armadio2 = armadio.filter(isLayer2)
+  armadio3 = armadio.filter(isLayer3)
+  armadio4 = armadio.filter(isLayer4)
+  armadio5 = armadio.filter(isLayer5)
+  armadio6 = armadio.filter(isLayer6)
+
+  armadio0.sort(sortColorCompatibility);
+  armadio1.sort(sortColorCompatibility);
+  armadio2.sort(sortColorCompatibility);
+  armadio3.sort(sortColorCompatibility);
+  armadio4.sort(sortColorCompatibility);
+  armadio5.sort(sortColorCompatibility);
+  armadio6.sort(sortColorCompatibility);
+
+  showSingleGarment(clothOfTheDay.Cloth_ID, clothOfTheDay.Layer)
+
+});
+
+document.addEventListener('keydown', (event)=> {    
+    if(event.key=='l'){
+      window.location.href = './new-tag.html'
+    }
+    if(event.key=='k'){
+      history.back()
+    }
+  
+  });
+
+    
+</script>
